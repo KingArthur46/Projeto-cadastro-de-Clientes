@@ -19,18 +19,21 @@ begin
   tabela.Open();
 end;
 
-procedure TfrmPesquisaFornecedores.FormShow(Sender: TObject);
+procedure TFrmPesquisaCidade.FormShow(Sender: TObject);
 var
   i: integer;
 begin
   inherited;
   tabela.Close;
-  tabela.SQL.Add('select * from fornecedores where 1=-1');
+  tabela.SQL.Add('select * from cidades where 1=-1');
   tabela.Open();
   for i := 0 to tabela.FieldCount -1 do
   begin
-    cmbPesquisa.Items.Add(tabela.Fields.Fields[i].FieldName);
+    if (tabela.Fields.Fields[i].FieldName = 'nome') or (tabela.Fields.Fields[i].FieldName = 'uf' ) then
+    begin
+      cmbEscolha.Items.Add(tabela.Fields.Fields[i].FieldName);
+    end;
+    cmbEscolha.ItemIndex := 0;
   end;
-end;
 
 end.
