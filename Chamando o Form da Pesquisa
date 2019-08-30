@@ -1,0 +1,17 @@
+procedure TFrmCadastroFornecedores.btnPesquisarClick(Sender: TObject);
+var
+  iID: integer;
+begin
+  inherited;
+    frmPesquisaFornecedores := TfrmPesquisaFornecedores.Create(nil);
+  try
+    frmPesquisaFornecedores.ShowModal;
+    if frmPesquisaFornecedores.blConfirma then
+    begin
+      iID := frmPesquisaFornecedores.tabela.FieldByName('id').AsInteger;
+      tabela.FindKey([iID]);
+    end;
+  finally
+    frmPesquisaFornecedores.Free;
+  end;
+end;
