@@ -1,0 +1,28 @@
+uses IniFiles;
+
+procedure TdmConexao.conexaoBeforeConnect(Sender: TObject);
+var
+  Arquivo: Ansistring;
+  ArquivoIni: TIniFile;
+begin
+  /// ////salva as informacoes no arquivo INI
+  Arquivo := Copy(ExtractFilePath(System.CmdLine), 2,
+    Length(ExtractFilePath(System.CmdLine)) - 1) + 'bancoFD.ini';
+  ArquivoIni := TIniFile.Create(Arquivo);
+  try
+    if FileExists(Arquivo) then
+    begin
+      if Trim(ArquivoIni.ReadString('BancoDados', 'StringConexao', '')) <> '' then
+      begin
+        TFDConnection(sender).ConnectionString := ArquivoIni.ReadString('BancoDados', 'StringConexao', '') ;
+      end;
+    end
+    else
+    begin
+      ArquivoIni.WriteString('BancoDados', 'StringConexao', '');
+    end;
+  finally
+    freeandNil(ArquivoIni);
+  end;
+end;
+@KingArthur46
