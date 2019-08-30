@@ -1,0 +1,36 @@
+procedure TfrmPesquisaFornecedores.btnPesquisarClick(Sender: TObject);
+var
+  textocmb: string;
+begin
+  inherited;
+  if cmbPesquisa.ItemIndex = -1 then
+  begin
+    Application.MessageBox('Campo vazio', 'Escolha uma opção', MB_OK + MB_ICONEXCLAMATION);
+    cmbPesquisa.SetFocus;
+    exit;
+  end;
+
+  textocmb := cmbPesquisa.Text;
+
+  tabela.Close;
+  tabela.SQL.Clear;
+  tabela.SQL.Add('select * from fornecedores where '+ textocmb +' like :Pesq');
+  tabela.ParamByName('Pesq').AsString := edtPesquisa.Text + '%';
+  tabela.Open();
+end;
+
+procedure TfrmPesquisaFornecedores.FormShow(Sender: TObject);
+var
+  i: integer;
+begin
+  inherited;
+  tabela.Close;
+  tabela.SQL.Add('select * from fornecedores where 1=-1');
+  tabela.Open();
+  for i := 0 to tabela.FieldCount -1 do
+  begin
+    cmbPesquisa.Items.Add(tabela.Fields.Fields[i].FieldName);
+  end;
+end;
+
+end.
