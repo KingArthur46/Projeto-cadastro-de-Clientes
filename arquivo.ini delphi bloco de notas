@@ -1,0 +1,2 @@
+[BancoDados]
+StringConexao=Database=delphicadastro;User_Name=root;Password=toor;DriverID=MySQL
